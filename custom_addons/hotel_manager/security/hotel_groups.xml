@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Groups -->
+        <record id="hotel_manager_group_manager" model="res.groups">
+            <field name="name">Hotel Manager</field>
+        </record>
+        <record id="hotel_manager_group_receptionist" model="res.groups">
+            <field name="name">Hotel Receptionist</field>
+        </record>
+
+        <!-- Record Rules for Receptionist -->
+        <record id="hotel_booking_receptionist_rule" model="ir.rule">
+            <field name="name">Hotel Booking Receptionist Rule</field>
+            <field name="model_id" ref="hotel_manager.model_hotel_booking"/>
+            <field name="groups" eval="[(4, ref('hotel_manager.hotel_manager_group_receptionist'))]"/>
+            <field name="domain_force">[('state', 'in', ['draft', 'confirmed'])]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</odoo>

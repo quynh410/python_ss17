@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Menu Root: Thư viện -->
+    <menuitem id="library_menu_root" name="Thư viện" sequence="10"/>
+
+    <!-- Menu Con: Quản lý Sách -->
+    <menuitem id="library_menu_books"
+              name="Quản lý Sách"
+              parent="library_menu_root"
+              sequence="10"/>
+
+    <!-- Menu Item: Tất cả đầu sách -->
+    <menuitem id="library_menu_all_books"
+              name="Tất cả đầu sách"
+              parent="library_menu_books"
+              action="library_book_action"
+              sequence="10"/>
+</odoo>

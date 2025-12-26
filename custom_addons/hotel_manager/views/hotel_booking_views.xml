@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Actions -->
+        <record id="hotel_booking_action" model="ir.actions.act_window">
+            <field name="name">Bookings</field>
+            <field name="res_model">hotel.booking</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="hotel_booking_tree" model="ir.ui.view">
+            <field name="name">hotel.booking.tree</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state=='draft'" 
+                      decoration-success="state=='confirmed'" 
+                      decoration-muted="state=='done'"
+                      decoration-danger="state=='cancelled'">
+                    <field name="code"/>
+                    <field name="customer_id"/>
+                    <field name="room_id"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="total_amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="hotel_booking_form" model="ir.ui.view">
+            <field name="name">hotel.booking.form</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" string="Confirm Booking" 
+                                type="object" 
+                                class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                        <button name="action_check_in" string="Check In" 
+                                type="object" 
+                                class="oe_highlight"
+                                invisible="state != 'confirmed'"/>
+                        <button name="action_cancel" string="Cancel" 
+                                type="object"
+                                invisible="state in ['done', 'cancelled']"/>
+                        <button name="action_draft" string="Set to Draft" 
+                                type="object"
+                                invisible="state != 'cancelled'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code" readonly="1"/>
+                                <field name="customer_id"/>
+                            </group>
+                            <group>
+                                <field name="room_id"/>
+                                <field name="check_in"/>
+                                <field name="check_out"/>
+                            </group>
+                            <group>
+                                <field name="duration" readonly="1"/>
+                                <field name="total_amount" readonly="1" class="oe_inline"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Additional Services">
+                                <field name="service_ids" widget="many2many_tags"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="hotel_booking_search" model="ir.ui.view">
+            <field name="name">hotel.booking.search</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="customer_id"/>
+                    <field name="room_id"/>
+                    <field name="code"/>
+                    <filter name="today_bookings" string="Today's Bookings" 
+                            domain="[('check_in', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <separator/>
+                    <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmed" string="Confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_room" string="Room" context="{'group_by': 'room_id'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

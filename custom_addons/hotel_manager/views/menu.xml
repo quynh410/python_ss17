@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Root Menu -->
+        <menuitem id="hotel_manager_root" name="Hotel Management" sequence="10"/>
+
+        <!-- Reception Menu -->
+        <menuitem id="hotel_reception" name="Reception" parent="hotel_manager_root" sequence="1"/>
+        <menuitem id="hotel_booking_menu" name="Bookings" parent="hotel_reception" action="hotel_booking_action" sequence="1"/>
+        <menuitem id="hotel_customer_menu" name="Customers" parent="hotel_reception" action="hotel_customer_action" sequence="2"/>
+
+        <!-- Room Management Menu -->
+        <menuitem id="hotel_room_management" name="Room Management" parent="hotel_manager_root" sequence="2"/>
+        <menuitem id="hotel_room_menu" name="Rooms" parent="hotel_room_management" action="hotel_room_action" sequence="1"/>
+
+        <!-- Configuration Menu -->
+        <menuitem id="hotel_config" name="Configuration" parent="hotel_manager_root" sequence="3"/>
+        <menuitem id="hotel_room_type_menu" name="Room Types" parent="hotel_config" action="hotel_room_type_action" sequence="1"/>
+        <menuitem id="hotel_service_menu" name="Services" parent="hotel_config" action="hotel_service_action" sequence="2"/>
+    </data>
+</odoo>

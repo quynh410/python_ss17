@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Groups -->
+    <record id="group_library_student" model="res.groups">
+        <field name="name">Student</field>
+        <field name="comment">Students can only view books</field>
+    </record>
+
+    <record id="group_library_librarian" model="res.groups">
+        <field name="name">Librarian</field>
+        <field name="comment">Librarians can manage all library data</field>
+    </record>
+</odoo>
